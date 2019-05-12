@@ -115,3 +115,4 @@ dmypy.json
 
 # customized
 download/
+.vscode/
