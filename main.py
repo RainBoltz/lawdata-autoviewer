@@ -20,7 +20,7 @@ with open('terms.txt', 'r', encoding="utf-8-sig") as f:
 terms = [x.strip() for x in terms]
 
 # 影像相關
-SAVE_PATH = r"views/img"
+SAVE_PATH = r"download"
 img_base_url = 'http://www.lawdata.com.tw.sw.library.ntpu.edu.tw:81'
 next_img_xpath = '//img[@title="下一頁"]/parent::a' #NoSuchElementException
 img_xpath = '/html/body/center/table/tbody/tr[2]/td/table' #background
@@ -86,7 +86,7 @@ for term in terms:
     page_cnt = 1
     while True:
         print("\t抓取第 %02d 頁"%page_cnt)
-        time.sleep(3)
+        time.sleep(10)
         
         HAS_RESULT_FLAG = True
         try:
@@ -109,7 +109,7 @@ for term in terms:
 
                 reader.click()
                 # new window start
-                time.sleep(2)
+                time.sleep(5)
                 driver.switch_to_window(driver.window_handles[-1])
                 ans = ""
                 for n in driver.find_elements_by_xpath('//img[@border="0"]'):
@@ -119,14 +119,14 @@ for term in terms:
                 driver.find_element_by_xpath('//input[@name="_TTS.BUTTON"]').click()
                 img_N = 1
                 while True:
-                    time.sleep(3)
+                    time.sleep(np.random.choice([3,4,5]))
                     img_url = img_base_url + driver.find_element_by_xpath(img_xpath).get_attribute('background')
                     download_img(img_url, driver.get_cookies(), "%s/%s/%03d"%(SAVE_PATH,full_name,img_N))
                     
                     # 如果一段時間內超過某流量就會被鎖 (目前未知)
                     rest_countdown -= 1
                     if rest_countdown == 0:
-                        rest_countdown = 150
+                        rest_countdown = 200
                         time.sleep(60*15)
                     
                     img_N += 1
