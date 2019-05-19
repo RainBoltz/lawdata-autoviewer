@@ -119,15 +119,15 @@ for term in terms:
                 driver.find_element_by_xpath('//input[@name="_TTS.BUTTON"]').click()
                 img_N = 1
                 while True:
-                    time.sleep(np.random.choice([3,4,5]))
+                    time.sleep(np.random.choice([4,5,6]))
                     img_url = img_base_url + driver.find_element_by_xpath(img_xpath).get_attribute('background')
                     download_img(img_url, driver.get_cookies(), "%s/%s/%03d"%(SAVE_PATH,full_name,img_N))
                     
                     # 如果一段時間內超過某流量就會被鎖 (目前未知)
                     rest_countdown -= 1
                     if rest_countdown == 0:
-                        rest_countdown = 200
-                        time.sleep(60*15)
+                        rest_countdown = 150
+                        time.sleep(60*30)
                     
                     img_N += 1
                     time.sleep(1)
